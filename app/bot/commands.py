@@ -14,16 +14,16 @@ async def begin_adventure(interaction: discord.Interaction):
             description=f"**{character_name}** enters the dungeon once more...\n\n"
             f"The adventure has been reset to the beginning.\n"
             f"Use `/status` to see where you are!",
-            color=discord.Color.green()
+            color=discord.Color.green(),
         )
 
         await interaction.response.send_message(embed=embed)
     except Exception as e:
         print(f"Error starting adventure: {e}")
         await interaction.response.send_message(
-            "❌ Failed to start adventure. Check the logs.",
-            ephemeral=True
+            "❌ Failed to start adventure. Check the logs.", ephemeral=True
         )
+
 
 @bot.tree.command(name="status", description="Check your character status")
 async def status(interaction: discord.Interaction):
@@ -33,13 +33,12 @@ async def status(interaction: discord.Interaction):
         embed = discord.Embed(
             title=f"📍 Current Location: {room_name}",
             description=description,
-            color=discord.Color.blue()
+            color=discord.Color.blue(),
         )
 
         await interaction.response.send_message(embed=embed)
     except Exception as e:
         print(f"Error getting character status: {e}")
         await interaction.response.send_message(
-            "❌ Failed to get status. Try `/begin_adventure` first!",
-            ephemeral=True
+            "❌ Failed to get status. Try `/begin_adventure` first!", ephemeral=True
         )

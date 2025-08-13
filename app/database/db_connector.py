@@ -3,8 +3,9 @@ from contextlib import contextmanager
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-MIGRATIONS_PATH = BASE_DIR / 'migrations'
-DB_PATH = BASE_DIR / 'database.db'
+MIGRATIONS_PATH = BASE_DIR / "migrations"
+DB_PATH = BASE_DIR / "database.db"
+
 
 @contextmanager
 def get_db_connection():
@@ -17,6 +18,7 @@ def get_db_connection():
         print(f"Database error occurred: {e}")
     finally:
         conn.close()
+
 
 def initialize_db():
     with get_db_connection() as conn:
@@ -37,7 +39,7 @@ def initialize_db():
         applied_migrations = {migration[0] for migration in cursor.fetchall()}
 
         # Pending migrations
-        migration_files = sorted(MIGRATIONS_PATH.glob('*.sql'))
+        migration_files = sorted(MIGRATIONS_PATH.glob("*.sql"))
 
         for migration_file in migration_files:
             if migration_file.name not in applied_migrations:
@@ -45,14 +47,17 @@ def initialize_db():
 
                 # Each migration is its own transaction
                 try:
-                    with open(migration_file, 'r') as file:
+                    with open(migration_file, "r") as file:
                         sql_script = file.read()
-                    
+
                     cursor.executescript(sql_script)
 
-                    cursor.execute("""
+                    cursor.execute(
+                        """
                         INSERT INTO Migrations (migration_name) VALUES (?);
-                    """, (migration_file.name,))
+                    """,
+                        (migration_file.name,),
+                    )
 
                     conn.commit()
                     print(f"✓ Completed: {migration_file.name}")
@@ -60,6 +65,5 @@ def initialize_db():
                     print(f"✗ Failed: {migration_file.name}: {e}")
                     conn.rollback()
                     raise
-
 
         cursor.close()
