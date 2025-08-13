@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from database.db_connector import initialize_db
+from app.database.db_connector import initialize_db
 
 
 intents = discord.Intents.default()
@@ -26,6 +26,3 @@ async def on_ready():
     except Exception as e:
         print(f"Error syncing commands: {e}")
 
-@bot.tree.command(name="ping", description="Ping the bot to check if it's online.")
-async def ping(interaction: discord.Interaction):
-    await interaction.response.send_message("Pong!")

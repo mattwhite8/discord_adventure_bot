@@ -2,7 +2,8 @@ from dotenv import load_dotenv
 
 import os
 
-from bot.bot import bot
+from app.bot.bot import bot
+import app.bot.commands
 
 load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
