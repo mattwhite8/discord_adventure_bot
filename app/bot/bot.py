@@ -3,7 +3,6 @@ from discord.ext import commands
 
 from app.database.db_connector import initialize_db
 
-
 intents = discord.Intents.default()
 intents.message_content = True
 

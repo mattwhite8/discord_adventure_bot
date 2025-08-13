@@ -1,6 +1,8 @@
 import discord
+
 from app.bot.bot import bot
-from app.services.database import get_or_create_character, get_character_status
+from app.services.database import get_character_status, get_or_create_character
+
 
 @bot.tree.command(name="begin_adventure", description="Start a new adventure")
 async def begin_adventure(interaction: discord.Interaction):
